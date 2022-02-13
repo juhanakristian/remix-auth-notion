@@ -98,7 +98,7 @@ export class NotionStrategy<User> extends Strategy<User, NotionVerifyParams> {
       type: "user",
       id: user.id,
       name: user.name,
-      avatarUrl: user.avatar_url,
+      avatarURL: user.avatar_url,
       email: user.person?.email,
     };
   }
