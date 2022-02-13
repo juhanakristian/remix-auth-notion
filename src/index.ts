@@ -27,7 +27,7 @@ export interface NotionProfile {
   id?: string;
   name?: string;
   email?: string;
-  avatar_url?: string;
+  avatarUrl?: string;
 }
 
 export interface NotionExtraParams
@@ -98,7 +98,7 @@ export class NotionStrategy<User> extends Strategy<User, NotionVerifyParams> {
       type: "user",
       id: user.id,
       name: user.name,
-      avatar_url: user.avatar_url,
+      avatarUrl: user.avatar_url,
       email: user.person?.email,
     };
   }
