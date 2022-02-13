@@ -1,49 +1,61 @@
-import { SessionStorage } from "@remix-run/server-runtime";
+import { StrategyVerifyCallback } from "remix-auth";
+
 import {
-  AuthenticateOptions,
-  Strategy,
-  StrategyVerifyCallback,
-} from "remix-auth";
+  OAuth2Profile,
+  OAuth2Strategy,
+  OAuth2StrategyVerifyParams,
+} from "remix-auth-oauth2";
 
-/**
- * This interface declares what configuration the strategy needs from the
- * developer to correctly work.
- */
-export interface MyStrategyOptions {
-  something: "You may need";
+export interface NotionStrategyOptions {
+  clientID: string;
+  callbackURL: string;
+  clientSecret: string;
 }
 
-/**
- * This interface declares what the developer will receive from the strategy
- * to verify the user identity in their system.
- */
-export interface MyStrategyVerifyParams {
-  something: "Dev may need";
+export interface NotionProfile extends OAuth2Profile {
+  type: string;
+  avatar_url: string;
 }
 
-export class MyStrategy<User> extends Strategy<User, MyStrategyVerifyParams> {
-  name = "change-me";
+export interface NotionExtraParams
+  extends Record<string, string | number | Record<string, unknown>> {
+  workspace_id: string;
+  workspace_name: string;
+  workspace_icon: string;
+  bot_id: string;
+  owner: Record<string, unknown>;
+}
+
+export class NotionStrategy<User> extends OAuth2Strategy<
+  User,
+  NotionProfile,
+  NotionExtraParams
+> {
+  name = "notion";
 
   constructor(
-    options: MyStrategyOptions,
-    verify: StrategyVerifyCallback<User, MyStrategyVerifyParams>
+    { clientID, callbackURL, clientSecret }: NotionStrategyOptions,
+    verify: StrategyVerifyCallback<
+      User,
+      OAuth2StrategyVerifyParams<NotionProfile, NotionExtraParams>
+    >
   ) {
-    super(verify);
-    // do something with the options here
+    super(
+      {
+        clientID,
+        callbackURL,
+        clientSecret,
+        authorizationURL: "https://api.notion.com/v1/oauth/authorize",
+        tokenURL: "https://api.notion.com/v1/oauth/token",
+      },
+      verify
+    );
   }
 
-  async authenticate(
-    request: Request,
-    sessionStorage: SessionStorage,
-    options: AuthenticateOptions
-  ): Promise<User> {
-    return await this.failure(
-      "Implement me!",
-      request,
-      sessionStorage,
-      options
-    );
-    // Uncomment me to do a success response
-    // this.success({} as User, request, sessionStorage, options);
+  protected authorizationParams() {
+    return new URLSearchParams({
+      owner: "user",
+      response_type: "code",
+    });
   }
 }

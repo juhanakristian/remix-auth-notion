@@ -1,6 +1,6 @@
 {
-  "name": "remix-auth-strategy-template",
-  "version": "0.0.0",
+  "name": "remix-auth-notion",
+  "version": "0.0.1",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "scripts": {
@@ -52,6 +52,16 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "remix-auth": "^3.0.0"
+    "remix-auth": "^3.0.0",
+    "remix-auth-oauth2": "^1.2.0"
+  },
+  "author": "Juhana Jauhiainen <juhana.jauhiainen@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/juhanakristian/remix-auth-notion/issues"
+  },
+  "homepage": "https://github.com/juhanakristian/remix-auth-notion#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juhanakristian/remix-auth-notion.git"
   }
 }
