@@ -27,7 +27,7 @@ export interface NotionProfile {
   id?: string;
   name?: string;
   email?: string;
-  avatarUrl?: string;
+  avatarURL?: string;
 }
 
 export interface NotionExtraParams
