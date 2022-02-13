@@ -18,7 +18,7 @@ Copy **OAuth client ID** and **OAuth client secret** to your `NotionStrategy` se
 
 ## How to use
 
-```
+```ts
 let notionStrategy = new NotionStrategy(
   {
     clientID: "",
@@ -35,7 +35,6 @@ let notionStrategy = new NotionStrategy(
 );
 
 authenticator.use(notionStrategy);
-
 ```
 
 In `routes/auth/notion.tsx`
