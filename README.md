@@ -3,6 +3,11 @@
 Allow users to login with Notion.
 
 Setup your application at [Notion integrations](https://www.notion.so/my-integrations)
+The integration should be setup as **Public integration**
+
+Copy **OAuth client ID** and **OAuth client secret** to your `NotionStrategy` setup and setup the **Redirect URI**.
+
+**Notion requires that the redirect URI uses HTTPS**. In development you can use a service like [ngrok](https://ngrok.com/) to be able to test the integration.
 
 ## Supported runtimes
 
@@ -12,8 +17,6 @@ Setup your application at [Notion integrations](https://www.notion.so/my-integra
 | Cloudflare | ✅          |
 
 ## How to use
-
-Notion requires that the `callbackURL` uses **HTTPS**. In development you can use a service like [ngrok](https://ngrok.com/) to be able to test the integration.
 
 ```
 let notionStrategy = new NotionStrategy(
