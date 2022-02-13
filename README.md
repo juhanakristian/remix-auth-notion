@@ -37,3 +37,44 @@ let notionStrategy = new NotionStrategy(
 authenticator.use(notionStrategy);
 
 ```
+
+In `routes/auth/notion.tsx`
+
+```tsx
+import { ActionFunction, LoaderFunction, redirect } from "remix";
+import { authenticator } from "~/auth.server";
+
+export let loader: LoaderFunction = () => redirect("/login");
+
+export let action: ActionFunction = ({ request }) => {
+  return authenticator.authenticate("notion", request);
+};
+```
+
+In `routes/auth/notion/callback.tsx`
+
+```tsx
+import { ActionFunction, LoaderFunction, redirect } from "remix";
+import { authenticator } from "~/auth.server";
+
+export let loader: LoaderFunction = async ({ request }) => {
+  return authenticator.authenticate("notion", request, {
+    successRedirect: "/success",
+    failureRedirect: "/login",
+  });
+};
+```
+
+Now you can direct the user to login by making a Form with POST to `/auth/notion`
+
+```tsx
+import { Form } from "remix";
+
+export default function Index() {
+  return (
+    <Form action="/auth/notion" method="post">
+      <button>Login with Notion</button>
+    </Form>
+  );
+}
+```
