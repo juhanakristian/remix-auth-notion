@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64";
 import {
   AuthenticateOptions,
   Strategy,
@@ -222,13 +223,13 @@ export class NotionStrategy<User> extends Strategy<User, NotionVerifyParams> {
     }
 
     // clientID and clientSecret are used as Basic auth credentials
-    const auth = Buffer.from(`${this.clientID}:${this.clientSecret}`, "utf8");
+    const auth = Base64.encode(`${this.clientID}:${this.clientSecret}`);
 
     let response = await fetch(this.tokenURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${auth.toString("base64")}`,
+        Authorization: `Basic ${auth}`,
       },
       body: params,
     });
